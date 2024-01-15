@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+      integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+      crossorigin="anonymous"
+    />
+
+    <link rel="stylesheet" href="/stylesheets/main.css" />
+    <link rel="stylesheet" href="/stylesheets/new.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Comic+Neue&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>Resume Builders</title>
+    <style>
+      body {
+        font-family: 'Comic Neue', sans-serif;
+        background-color: #f0f0f0;
+        /* padding-top: 70px; */
+      }
+  
+      /* .navbar {
+        background-color: #333;
+        color: white;
+      }
+  
+      .navbar-brand {
+        font-size: 1.5em;
+      } */
+  
+      /* h1, h2, h3 {
+        color: #333;
+      } */
+  
+      form {
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+  
+      .form-group {
+        margin-bottom: 20px;
+      }
+  
+      input[type="text"], input[type="number"] {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 1em;
+      }
+  
+      button[type="submit"] {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+        font-size: 1em;
+        background-color: #28a745;
+        color: white;
+      }
+  
+      button[type="submit"]:hover {
+        background-color: #218838;
+      }
+  
+      .btn-back {
+        margin-top: 10px;
+        width: 100%;
+      }
+  
+      .btn-back:hover {
+        background-color: #007bff;
+      }
+      </style>
+  </head>
+
+  <body>
+    <!-- Navbar	 -->
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <a class="navbar-brand" href="/">Resume Builders</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarCollapse"
+        aria-controls="navbarCollapse"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/landing"
+              >Home <span class="sr-only">(current)</span></a
+            >
+          </li>
+        </ul>
+
+        <diV class="float-right">
+          <ul class="navbar-nav mr auto">
+            <% if(!currentUser){ %>
+            <li class="nav-item mx-2">
+              <a href="/auth/google" class="nav-link">Login</a>
+            </li>
+            <!-- <li class="nav-item  mx-2"><a href="/register" class="nav-link">Sign-Up</a></li> -->
+            <% } else{%>
+            <li class="nav-item mx-2">
+              <a href="#" class="nav-link"
+                >Signed In As <%=currentUser.name%></a
+              >
+            </li>
+            <!-- <li class="nav-item  mx-2"><a href="auth/logout" class="nav-link">Log-Out</a></li> -->
+            <% }%>
+          </ul>
+        </diV>
+
+        <!-- <form class="form-inline mt-2 mt-md-0">
+      <input class="form-control mr-sm-2" type="text" value="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form> -->
+      </div>
+    </nav>
+
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#"> Resume Builders </a>
+        </div>
+      </div>
+    </nav>
+
+    <br />
+    <diV class="container">
+      <% if (error && error.length >0){ %>
+      <div class="alert alert-danger" role="alert"><%= error %></div>
+      <% } %> <% if (success && success.length >0){ %>
+      <div class="alert alert-success" role="alert"><%= success %></div>
+      <% } %>
+    </diV>
+    <br />
+    <div class="row justify-content-center">
+      <div class="col-md-12 text-center">
+        <h1>Create A New Resume</h1>
+      </div>
+
+      <div class="col-lg-6 col-md-6 col-sm-8 col-10">
+        <form action="/resume/normal/<%=resume._id%>?_method=PUT" method="POST">
+          <h2>Personal Details</h2>
+
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
+              name="resume[name]"
+              value="<%=resume.name%>"
+              placeholder="Name"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
+              name="resume[roll_no]"
+              value="<%=resume.roll_no%>"
+              placeholder="Roll_no"
+            />
+          </div>
+
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="number"
+              name="resume[contact]"
+              value="<%=resume.contact%>"
+              placeholder="Contact"
+            />
+          </div>
+
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
+              name="resume[email]"
+              value="<%=resume.email%>"
+              placeholder="Email"
+            />
+          </div>
+
+          <h2>Education</h2>
+          <h3>College/Degree</h3>
+
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
+              name="resume[degree_name]"
+              value="<%=resume.degree_name%>"
+              placeholder="Degree"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="number"
+              name="resume[CGPA]"
+              value="<%=resume.CGPA%>"
+              min="0.01"
+              step="0.01"
+              placeholder="CGPA"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
+              name="resume[Duration]"
+              value="<%=resume.Duration%>"
+              placeholder="Passing Year"
+            />
+          </div>
+
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
+              name="resume[University_Name]"
+              value="<%=resume.University_Name%>"
+              placeholder="University"
+            />
+          </div>
+          <h3>Class XII</h3>
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
+              name="resume[board_12]"
+              value="<%=resume.board_12%>"
+              placeholder="Board"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="number"
+              name="resume[per_12]"
+              value="<%=resume.per_12%>"
+              min="0.01"
+              step="0.01"
+              placeholder="Percentage"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
+              name="resume[pass_12]"
+              value="<%=resume.pass_12%>"
+              placeholder="Passing Year"
+            />
+          </div>
+
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
+              name="resume[school_12]"
+              value="<%=resume.school_12%>"
+              placeholder="School Name"
+            />
+          </div>
+          <h3>Class X</h3>
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
+              name="resume[board_10]"
+              value="<%=resume.board_10%>"
+              placeholder="Board"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="number"
+              name="resume[per_10]"
+              value="<%=resume.per_10%>"
+              min="0.01"
+              step="0.01"
+              placeholder="Percentage"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
+              name="resume[pass_10]"
+              value="<%=resume.pass_10%>"
+              placeholder="Passing Year"
+            />
+          </div>
+
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
+              name="resume[school_10]"
+              value="<%=resume.school_10%>"
+              placeholder="School Name"
+            />
+          </div>
+          <h2>Skills</h2>
+
+          <h3>Languages</h3>
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
+              name="resume[lang_1]"
+              value="<%=resume.lang_1%>"
+              placeholder="Skill Name"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
+              name="resume[lang_2]"
+              value="<%=resume.lang_2%>"
+              placeholder="Languages used or Desc"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
+              name="resume[lang_3]"
+              value="<%=resume.lang_3%>"
+              placeholder="Skill Name"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
+              name="resume[lang_4]"
+              value="<%=resume.lang_4%>"
+              placeholder="Languages used or Desc"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
+              name="resume[lang_5]"
+              value="<%=resume.lang_5%>"
+              placeholder="Skill Name"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
+              name="resume[lang_6]"
+              value="<%=resume.lang_6%>"
+              placeholder="Languages used or Desc"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
+              name="resume[lang_7]"
+              value="<%=resume.lang_7%>"
+              placeholder="Skill Name"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
+              name="resume[lang_8]"
+              value="<%=resume.lang_8%>"
+              placeholder="Languages used or Desc"
+            />
+          </div>
+          <h3>Projects</h3>
+
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
+              name="resume[proj_1]"
+              value="<%=resume.proj_1%>"
+              placeholder="Project Title"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
+              name="resume[projd_1]"
+              value="<%=resume.projd_1%>"
+              placeholder="Project Desc."
+            />
+          </div>
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
+              name="resume[plink_1]"
+              value="<%= resume.plink_1%>"
+              placeholder="Project Link"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
+              name="resume[proj_2]"
+              value="<%=resume.proj_2%>"
+              placeholder="Project Title"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
+              name="resume[projd_2]"
+              value="<%=resume.projd_2%>"
+              placeholder="Project Desc."
+            />
+          </div>
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
+              name="resume[plink_2]"
+              value="<%= resume.plink_2%>"
+              placeholder="Project Link"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
+              name="resume[proj_3]"
+              value="<%=resume.proj_3%>"
+              placeholder="Project Title"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
+              name="resume[projd_3]"
+              value="<%=resume.projd_3%>"
+              placeholder="Project Desc."
+            />
+          </div>
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
+              name="resume[plink_3]"
+              value="<%= resume.plink_3%>"
+              placeholder="Project Link"
+            />
+          </div>
+          <h2>Achievements and Hobbies</h2>
+          <h3>Achievements</h3>
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
+              name="resume[ach_1]"
+              value="<%=resume.ach_1%>"
+              placeholder="Achievement"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
+              name="resume[ach_2]"
+              value="<%=resume.ach_2%>"
+              placeholder="Achievement"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
+              name="resume[ach_3]"
+              value="<%=resume.ach_3%>"
+              placeholder="Achievement"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
+              name="resume[ach_4]"
+              value="<%=resume.ach_4%>"
+              placeholder="Achievement"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
+              name="resume[ach_5]"
+              value="<%=resume.ach_5%>"
+              placeholder="Achievement"
+            />
+          </div>
+          <h3>Hobbies</h3>
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
+              name="resume[hob_1]"
+              value="<%=resume.hob_1%>"
+              placeholder="Hobby"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
+              name="resume[hob_2]"
+              value="<%=resume.hob_2%>"
+              placeholder="Hobby"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
+              name="resume[hob_3]"
+              value="<%=resume.hob_3%>"
+              placeholder="Hobby"
+            />
+          </div>
+          <h3>Account Links</h3>
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
+              name="resume[hlink_1]"
+              value="<%=resume.hlink_1%>"
+              placeholder="Link Title"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
+              name="resume[link_1]"
+              value="<%=resume.link_1%>"
+              placeholder="Github,Linkedin etc . account links"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
+              name="resume[hlink_2]"
+              value="<%=resume.hlink_2%>"
+              placeholder="Link Title"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
+              name="resume[link_2]"
+              value="<%=resume.link_2%>"
+              placeholder="Github,Linkedin etc . account links"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
+              name="resume[hlink_3]"
+              value="<%=resume.hlink_3%>"
+              placeholder="Link Title"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
+              name="resume[link_3]"
+              value="<%=resume.link_3%>"
+              placeholder="Github,Linkedin etc . account links"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
+              name="resume[hlink_4]"
+              value="<%=resume.hlink_4%>"
+              placeholder="Link Title"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
+              name="resume[link_4]"
+              value="<%=resume.link_4%>"
+              placeholder="Github,Linkedin etc . account links"
+            />
+          </div>
+          <h2>Projects</h2>
+        <div id="projectsContainer">
+          <% for(let i=0; i < resume.work_projects.length; i++) { %>
+            <div class="project">
+              <h3>Project <%= i + 1 %>
+              </h3>
+              <div class="form-group">
+                <input class="form-control" type="text" name="resume[work_projects][<%= i %>][projectName]"
+                  value="<%= resume.work_projects[i].projectName %>" placeholder="Project Title" />
+              </div>
+              <div class="form-group">
+                <input class="form-control" type="text" name="resume[work_projects][<%= i %>][description]"
+                  value="<%= resume.work_projects[i].description %>" placeholder="Project Description" />
+              </div>
+              <div class="form-group">
+                <input class="form-control" type="text" name="resume[work_projects][<%= i %>][link]"
+                  value="<%= resume.work_projects[i].link %>" placeholder="Project Link" />
+              </div>
+              <div class="form-group">
+                <input class="form-control" type="text" name="resume[work_projects][<%= i %>][duration]"
+                  value="<%= resume.work_projects[i].duration %>" placeholder="Project Duration" />
+              </div>
+            </div>
+            <% } %>
+        </div>
+
+        <!-- Add Project button -->
+        <button type="button" class="btn btn-info" id="addProjectBtn">Add Project</button>
+          <div class="form-group">
+            <button class="btn btn-success btn-lg btn-block">
+              Update Resume
+            </button>
+          </div>
+        </form>
+        <a class="btn btn-md btn-primary" href="/resume/normal/<%=resume._id%>"
+          ><i class="fa fa-arrow-left"></i> &nbsp Back</a
+        >
+        <br />
+        <br />
+      </div>
+    </div>
+    <%- include("../partials/footer") %>
+  </body>
+</html>
+<script>
+  document.getElementById('addProjectBtn').addEventListener('click', function () {
+    const projectsContainer = document.getElementById('projectsContainer');
+    const projectCount = projectsContainer.getElementsByClassName('project').length;
+    console.log(projectCount, projectsContainer);
+    const newProject = document.createElement('div');
+    newProject.classList.add('project');
+    console.log(newProject)
+    newProject.innerHTML = `
+      <h3>Project ${projectCount + 1}</h3>
+      <div class="form-group">
+        <input
+          class="form-control"
+          type="text"
+          name="resume[work_projects][${projectCount}][projectName]"
+          placeholder="Project Title"
+        />
+      </div>
+      <div class="form-group">
+        <input
+          class="form-control"
+          type="text"
+          name="resume[work_projects][${projectCount}][description]"
+          placeholder="Project Description"
+        />
+      </div>
+      <div class="form-group">
+        <input
+          class="form-control"
+          type="text"
+          name="resume[work_projects][${projectCount}][link]"
+          placeholder="Project Link"
+        />
+      </div>
+    `;
+
+    projectsContainer.appendChild(newProject);
+  });
+</script>

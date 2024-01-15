@@ -1,0 +1,193 @@
+<%- include("../partials/header") %>
+
+  <br />
+  <div class="middle">
+    <h1>
+      <%=resume.name %>
+    </h1>
+    <p class="heading_resume">
+      <% resume.accountLinks.forEach(function(links, index) { %>
+        <a href="<%= links.link %>" style="color: black;text-transform: capitalize;">
+          <%= links.linkTitle %>
+        </a>
+
+
+        <% }); %>
+    </p>
+    <!-- <p class="heading_resume">
+      <i class="fas fa-university"> &nbsp <%=resume.University_Name %></i>
+    </p> -->
+    <p class="heading_resume">
+      <i class="fas fa-envelope"> &nbsp <%=resume.email %> &nbsp</i> | &nbsp
+      <i class="fas fa-phone-alt"> &nbsp <%=resume.contact %></i>
+    </p>
+  </div>
+
+  <hr class="hr_head" />
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <br />
+
+        <div>
+          <div class="list-group">
+            <h4>
+              Languages and Skills
+              <hr class="hr_custom" />
+            </h4>
+            <br />
+            <ul>
+              <% resume.skills.forEach(function(skill, index) { %>
+                <li class="proj_heading">
+                  <%= skill.skillName %>
+
+                </li>
+                <li style="list-style-type: none">
+                  <%= skill.description %>
+                </li>
+
+                <% }); %>
+            </ul>
+            <br />
+
+            <h4>
+              Achievements
+              <hr class="hr_custom" />
+            </h4>
+            <ul>
+              <% resume.achievements.forEach(function(achievement, index) { %>
+                <li class="achievement">
+                  <%= achievement %>
+                </li>
+                <% }); %>
+            </ul>
+          </div>
+        </div>
+        <br />
+        <br />
+        <h4>
+          Hobbies
+          <hr class="hr_custom" />
+        </h4>
+        <ul>
+          <% resume.hobbies.forEach(function(hobby, index) { %>
+            <li class="hobby">
+              <%= hobby %>
+            </li>
+            <% }); %>
+        </ul>
+        <br />
+      </div>
+      <div class="col-md-8">
+        <br />
+
+        <h4>
+          Education
+          <hr class="hr_custom" />
+        </h4>
+
+        <table class="education">
+          <% resume.education.forEach(function(edu, index) { %>
+
+            <tr>
+              <td>
+                <%=edu.degreeName%>
+              </td>
+              <td>
+                <%=edu.passingYear%>
+              </td>
+              <td>
+                <%=edu.instituteName%>
+              </td>
+              <td>
+                <%=edu.percentage%>
+              </td>
+            </tr>
+
+
+
+            <% }); %>
+        </table>
+        <br />
+        <h4>
+          Projects
+          <hr class="hr_custom" />
+        </h4>
+
+        <ul>
+          <% resume.personalProjects.forEach(function(project, index) { %>
+            <li class="proj_heading">
+              <%= project.name %>
+                <a href="<%= project.link %>" style="color: black">
+                  <i class="fas fa-external-link-square-alt"></i>
+                </a>
+            </li>
+            <li style="list-style-type: none">
+              <%= project.description %>
+            </li>
+
+            <!-- Add other fields related to the project here -->
+            <% }); %>
+        </ul>
+
+        <br />
+        <h4 class="headings">Work Projects</h4>
+        <ul style="font-size: 15px">
+          <% resume.work_projects.forEach(function(project, index) { %>
+            <li class="proj_heading">
+              <%= project.projectName %>
+                <a href="<%= project.link %>" style="color: black">
+                  <i class="fas fa-external-link-square-alt"></i>
+                </a>
+            </li>
+            <li style="list-style-type: none">
+              <%= project.description %>
+            </li>
+            <li><strong>Duration:</strong>
+              <%= project.duration %>
+            </li>
+            <!-- Add other fields related to the project here -->
+            <% }); %>
+        </ul>
+        <br />
+      </div>
+      <h5>
+        I hereby declare that the details furnished above are true and correct to
+        the best of my knowledge and belief.
+      </h5>
+      <br />
+      <br />
+      <div class="col-md-8">
+        <a class="btn btn-md btn-success" href="/resume"><i class="fa fa-arrow-left"></i> &nbsp Go Back</a>
+
+        <a class="btn btn-md btn-primary" href="/resume/pro/<%= resume._id%>/edit">
+          <i class="fas fa-edit"></i> &nbsp Edit Resume</a>
+
+        <!-- <a class="btn btn-md btn-danger" href="/resume/pro//download"
+				>Download
+			</a> -->
+        <button class="btn btn-md btn-danger">
+          <i class="fa fa-download"></i>
+          <a href="/resume/pro/<%= resume._id%>/download" class="makewhite">Download Preview</a>
+        </button>
+        <button class="btn btn-md btn-dark">
+          <a href="/resume/normal/<%= resume._id%>" class="makewhite"><i class="fa fa-code-branch"></i> &nbsp Normal
+            Version</a>
+        </button>
+        <br />
+        <br />
+        <form action="/resume/pro/<%=resume._id %>?_method=DELETE" method="POST">
+          <button class="btn btn-md btn-danger">
+            <i class="fa fa-trash"></i> &nbsp Delete
+          </button>
+        </form>
+        <!-- <a href="/resume/pro/" download rel="noopener noreferrer" target="_blank">
+   Download File
+</a> -->
+        <br />
+        <br />
+      </div>
+
+      <%- include("../partials/footer") %>
+    </div>
+  </div>

@@ -1,0 +1,160 @@
+.thumbnail img {
+  width: 100%;
+}
+.thumbnail {
+  padding: 0;
+}
+
+.thumbnail .caption {
+  padding: 9px;
+}
+
+.jumbotron .container h1 {
+  font-family: "Comic Neue", cursive;
+  color: rgb(184, 134, 184);
+}
+
+/* .container h4{
+	background-color:grey;
+} */
+table,
+th,
+td {
+  border: 1px solid black;
+}
+.education {
+  width: 100%;
+  text-align: center;
+}
+#landing {
+  font-family: "Comic Neue", cursive;
+  font-size: 100px;
+  color: purple;
+}
+#landing-2 {
+  font-family: "Comic Neue", cursive;
+  font-size: 50px;
+}
+.jumbotron .container a {
+  color: white;
+}
+
+#delete-form {
+  display: inline;
+}
+#delete-comment {
+  display: inline;
+}
+#Edit-Button {
+  color: white;
+}
+.thumbnail .caption h4 {
+  color: purple;
+}
+.hr_head {
+  border: 1px solid black;
+}
+.middle {
+  text-align: center;
+}
+
+.heading_resume {
+  font-family: "Comic Neue", cursive;
+  font-size: 20px;
+  color: grey;
+}
+.headings {
+  text-align: left;
+  background-color: #a8a8a8;
+  padding-top: 1px;
+  padding-bottom: 3px;
+  padding-left: 15px;
+}
+.proj_heading {
+  font-family: "Comic Neue", cursive;
+  font-size: 20px;
+  color: black;
+  font-weight: bold;
+}
+.hr_custom {
+  border-top: 2px solid purple;
+}
+
+.makewhite {
+  color: white;
+}
+a {
+  color: white;
+}
+/* Add your CSS styling here */
+body {
+  font-family: 'Comic Neue', sans-serif;
+  background-color: #f8f9fa;
+  color: #333;
+}
+
+.navbar-brand {
+  font-size: 1.5em;
+}
+
+.navbar-nav .nav-link {
+  color: #fff;
+}
+
+.jumbotron {
+  background-color: #343a40;
+  color: #fff;
+  padding: 100px 0;
+}
+
+.custom-card {
+  background-color: #fdf5e6;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.custom-card-body {
+  background-color: #fdf5e6;
+}
+
+.btn-dark {
+  background-color: #1e1f20;
+  border-color: #343a40;
+}
+
+.btn-dark:hover {
+  background-color: #23272b;
+  border-color: #23272b;
+}
+
+.btn-success {
+  background-color: #28a745;
+  border-color: #28a745;
+}
+
+.btn-success:hover {
+  background-color: #218838;
+  border-color: #218838;
+}
+
+.btn-info {
+  background-color: #17a2b8;
+  border-color: #17a2b8;
+}
+
+.btn-info:hover {
+  background-color: #138496;
+  border-color: #138496;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+.btn-danger:hover {
+  background-color: #c82333;
+  border-color: #c82333;
+}

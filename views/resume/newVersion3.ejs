@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+
+    <link rel="stylesheet" href="/stylesheets/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue&display=swap" rel="stylesheet" />
+    <script src="/stylesheets/pdf.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.js"></script>
+    <title>Professional Resume</title>
+    <!-- Add your stylesheets and fonts here -->
+    <style>
+        /* Add your styles here */
+
+        /* Global styles */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        /* Header styles */
+        .header {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+
+        /* Main content styles */
+        .resume-content {
+            margin-bottom: 20px;
+        }
+
+        .contact-info {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .contact-info i {
+            margin-right: 5px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .section-content ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .section-content ul li {
+            margin-bottom: 8px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            color: #777;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container col-md-10">
+
+        <div class="resume-content">
+            <h1 style="            text-align: center;
+            ">
+                <%= resume.name %>
+            </h1>
+
+            <div class="contact-info">
+                <% resume.accountLinks.forEach(function(links, index) { %>
+                    <a href="<%= links.link %>" style="text-transform: capitalize;color: navy;">
+                        <%= links.linkTitle %>
+                    </a>
+                    <% }); %>
+                        <br>
+                        <i class="fas fa-envelope"></i>
+                        <%= resume.email %> &nbsp | &nbsp
+                            <i class="fas fa-phone-alt"></i>
+                            <%= resume.contact %>
+            </div>
+
+            <hr class="separator">
+
+
+
+
+
+            <div class="section">
+                <div class="section-title">Education</div>
+                <div class="section-content">
+                    <table class="table">
+                        <% resume.education.forEach(function(edu, index) { %>
+                            <tr>
+                                <td>
+                                    <%= edu.degreeName %>
+                                </td>
+                                <td>
+                                    <%= edu.passingYear %>
+                                </td>
+                                <td>
+                                    <%= edu.instituteName %>
+                                </td>
+                                <td>
+                                    <%= edu.percentage %>
+                                </td>
+                            </tr>
+                            <% }); %>
+                    </table>
+                </div>
+            </div>
+            <div class="section">
+                <div class="section-title">Languages and Skills</div>
+                <div class="section-content">
+                    <ul>
+                        <% resume.skills.forEach(function(skill, index) { %>
+                            <li>
+                                <%= skill.skillName %>
+                            </li>
+                            <li>
+                                <%= skill.description %>
+                            </li>
+                            <% }); %>
+                    </ul>
+                </div>
+            </div>
+            <div class="section">
+                <div class="section-title">Projects</div>
+                <div class="section-content">
+                    <ul>
+                        <% resume.personalProjects.forEach(function(project, index) { %>
+                            <li>
+                                <%= project.name %>
+                                    <a href="<%= project.link %>"><i class="fas fa-external-link-square-alt"></i></a>
+                            </li>
+                            <li>
+                                <%= project.description %>
+                            </li>
+                            <% }); %>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Work Projects</div>
+                <div class="section-content">
+                    <ul>
+                        <% resume.work_projects.forEach(function(project, index) { %>
+                            <li>
+                                <%= project.projectName %>
+                                    <a href="<%= project.link %>"><i class="fas fa-external-link-square-alt"></i></a>
+                            </li>
+                            <li>
+                                <%= project.description %>
+                            </li>
+                            <li><strong>Duration:</strong>
+                                <%= project.duration %>
+                            </li>
+                            <% }); %>
+                    </ul>
+                </div>
+            </div>
+            <div class="section">
+                <div class="section-title">Languages and Skills</div>
+                <div class="section-content">
+                    <ul>
+                        <% resume.skills.forEach(function(skill, index) { %>
+                            <li>
+                                <%= skill.skillName %>
+                            </li>
+                            <li>
+                                <%= skill.description %>
+                            </li>
+                            <% }); %>
+                    </ul>
+                </div>
+            </div>
+            <div class="section">
+                <div class="section-title">Achievements</div>
+                <div class="section-content">
+                    <ul>
+                        <% resume.achievements.forEach(function(achievement, index) { %>
+                            <li>
+                                <%= achievement %>
+                            </li>
+                            <% }); %>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Hobbies</div>
+                <div class="section-content">
+                    <ul>
+                        <% resume.hobbies.forEach(function(hobby, index) { %>
+                            <li>
+                                <%= hobby %>
+                            </li>
+                            <% }); %>
+                    </ul>
+                </div>
+            </div>
+            <h5>
+                I hereby declare that the details furnished above are true and correct to the best of my knowledge and
+                belief.
+            </h5>
+            <br />
+            <a class="btn btn-md btn-success" href="/resume"><i class="fa fa-arrow-left"></i> &nbsp Go Back</a>
+
+            <a class="btn btn-md btn-primary" href="/resume/normal/<%= resume._id%>/edit">
+                <i class="fas fa-edit"></i> &nbsp Edit Resume</a>
+
+            <button class="btn btn-md btn-danger">
+                <i class="fa fa-download"></i>
+                <a href="/resume/normal/<%= resume._id%>/download" class="makewhite">Download Preview</a>
+            </button>
+            <button class="btn btn-md btn-dark">
+                <a href="/resume/pro/<%= resume._id%>" class="makewhite"><i class="fa fa-code-branch"></i> &nbsp Pro
+                    Version</a>
+            </button>
+            <br />
+            <br />
+            <form action="/resume/normal/<%=resume._id %>?_method=DELETE" method="POST">
+
+                <form action="/resume/normal/<%=resume._id %>?_method=DELETE" method="POST">
+                    <button class="btn btn-md btn-danger">
+                        <i class="fa fa-trash"></i> &nbsp Delete
+                    </button>
+                </form>
+                <br />
+                <br />
+                <div class="footer">
+                    <%- include("../partials/footer") %>
+                </div>
+        </div>
+    </div>
+    </div>
+</body>
+
+</html>

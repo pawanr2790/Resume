@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resume Builders</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+  <link rel="stylesheet" href="/stylesheets/main.css">
+  <link rel="stylesheet" href="/stylesheets/resumes.css">
+  <link href="https://fonts.googleapis.com/css2?family=Comic+Neue&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <a class="navbar-brand" href="/">Resume Builders</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+      aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="navbar-nav ml-auto">
+        <% if(!currentUser){ %>
+          <li class="nav-item">
+            <a href="/auth/google" class="nav-link">Login</a>
+          </li>
+          <!-- <li class="nav-item"><a href="/register" class="nav-link">Sign-Up</a></li> -->
+        <% } else { %>
+          <li class="nav-item">
+            <a href="#" class="nav-link">Signed In As <%=currentUser.name%></a>
+          </li>
+          <li class="nav-item">
+            <a href="auth/logout" class="nav-link">Log-Out</a>
+          </li>
+        <% } %>
+      </ul>
+    </div>
+  </nav>
+
+  <header class="jumbotron text-center">
+    <div class="container">
+      <h1>Welcome To Resume Builder</h1>
+      <p>Make Professional Resumes Using Our Website.</p>
+      <a href="/resume/new/personal" class="btn btn-dark btn-lg">New Resume</a>
+    </div>
+  </header>
+
+  <div class="container">
+    <% if (error && error.length > 0) { %>
+      <div class="alert alert-danger" role="alert"><%= error %></div>
+    <% } %>
+    <% if (success && success.length > 0) { %>
+      <div class="alert alert-success" role="alert"><%= success %></div>
+    <% } %>
+
+    <div class="row text-center">
+      <% resumes.forEach(function(resume){ %>
+        <% if(currentUser && resume.author.googleId == (currentUser.googleId)) { %>
+          <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+            <div class="card custom-card">
+              <br>
+              <h5><%= resume.name %></h5>
+              <h5><%= resume.roll_no %></h5>
+              <div class="card-body custom-card-body">
+                <% if(currentUser && resume.author.googleId == (currentUser.googleId)) { %>
+                  <a href="/resume/normal/<%= resume._id%>" class="btn btn-info btn-md">Normal Resume</a>
+                  <br><br>
+                  <a href="/resume/pro/<%= resume._id%>" class="btn btn-success btn-md">Pro Resume</a>
+                  <br><br>
+                  <form action="/resume/pro/<%=resume._id %>?_method=DELETE" method="POST">
+                    <button class="btn btn-md btn-danger">Delete Resume</button>
+                  </form>
+                <% } %>
+              </div>
+            </div>
+          </div>
+        <% } %>
+      <% }); %>
+    </div>
+  </div>
+
+  <%- include("../partials/footer") %>
+</body>
+</html>

@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+
+  <link rel="stylesheet" href="/stylesheets/main.css" />
+  <link rel="stylesheet" href="/stylesheets/new.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Comic+Neue&display=swap" rel="stylesheet" />
+
+  <title>Resume Builders</title>
+  <style>
+    body {
+      font-family: 'Comic Neue', sans-serif;
+      background-color: #f0f0f0;
+      /* padding-top: 70px; */
+      margin: 0;
+    }
+
+    .navbar {
+      background-color: #333;
+      color: white;
+    }
+
+    .navbar-brand {
+      font-size: 1.5em;
+    }
+
+    h1,
+    h2,
+    h3 {
+      color: #333;
+    }
+
+    form {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    textarea {
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 1em;
+      margin-bottom: 10px;
+    }
+
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    button[type="submit"],
+    button.addProject {
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      font-size: 1em;
+      background-color: #2883a7;
+      color: white;
+      margin-bottom: 20px;
+    }
+
+    button[type="submit"]:hover,
+    button.addProject:hover {
+      background-color: #146888;
+    }
+
+    .btn-back {
+      margin-top: 10px;
+      width: 100%;
+    }
+
+    .btn-back:hover {
+      background-color: #007bff;
+    }
+
+    .work-projects-add {
+      margin-bottom: 18.4px;
+    }
+
+    .addProject {
+      margin: 18.4px 0;
+    }
+  </style>
+
+
+
+</head>
+
+<body>
+  <!-- Navbar	 -->
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <a class="navbar-brand" href="/">Resume Builders</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+      aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="/landing">Home <span class="sr-only">(current)</span></a>
+        </li>
+      </ul>
+
+      <diV class="float-right">
+        <ul class="navbar-nav mr auto">
+          <% if(!currentUser){ %>
+            <li class="nav-item mx-2">
+              <a href="/auth/google" class="nav-link">Login</a>
+            </li>
+            <!-- <li class="nav-item  mx-2"><a href="/register" class="nav-link">Sign-Up</a></li> -->
+            <% } else{%>
+              <li class="nav-item mx-2">
+                <a href="#" class="nav-link">Signed In As <%=currentUser.name%></a>
+              </li>
+              <!-- <li class="nav-item  mx-2"><a href="auth/logout" class="nav-link">Log-Out</a></li> -->
+              <% }%>
+        </ul>
+      </diV>
+
+      <!-- <form class="form-inline mt-2 mt-md-0">
+      <input class="form-control mr-sm-2" type="text" value="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form> -->
+    </div>
+  </nav>
+
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#"> Resume Builders </a>
+      </div>
+    </div>
+  </nav>
+
+  <br />
+  <diV class="container">
+    <% if (error && error.length>0){ %>
+      <div class="alert alert-danger" role="alert">
+        <%= error %>
+      </div>
+      <% } %>
+        <% if (success && success.length>0){ %>
+          <div class="alert alert-success" role="alert">
+            <%= success %>
+          </div>
+          <% } %>
+  </diV>
+  <br />
+  <div class="row justify-content-center">
+    <div class="col-md-12 text-center">
+      <h1>Create A New Resume</h1>
+    </div>
+
+    <div class="col-lg-6 col-md-6 col-sm-8 col-10">
+      <form action="/resume/<%=redirect%>/<%=resume._id%>?_method=PUT" method="POST">
+        <div class="form-group">
+          <h2>Personal Details</h2>
+
+          <input class="form-control" type="text" name="resume[name]" value="<%=resume.name%>" placeholder="Name" />
+        </div>
+
+
+        <div class="form-group">
+          <input class="form-control" type="number" name="resume[contact]" value="<%=resume.contact%>"
+            placeholder="Contact" />
+        </div>
+
+        <div class="form-group">
+          <input class="form-control" type="text" name="resume[email]" value="<%=resume.email%>" placeholder="Email" />
+        </div>
+
+        <h2>Education</h2>
+        <div id="educationContainer">
+          <% for(let i=0; i < resume.education.length; i++) { %>
+            <div>
+              <div class="form-group">
+                <input class="form-control" type="text" name="resume[education][<%= i %>][instituteName]"
+                  value="<%= resume.education[i].instituteName %>" placeholder="Institute Name" />
+              </div>
+              <div class="form-group">
+                <input class="form-control" type="text" name="resume[education][<%= i %>][degreeName]"
+                  value="<%= resume.education[i].degreeName %>" placeholder="Degree Name" />
+              </div>
+              <div class="form-group">
+                <input class="form-control" type="text" name="resume[education][<%= i %>][passingYear]"
+                  value="<%= resume.education[i].passingYear %>" placeholder="Passing Year" />
+              </div>
+              <div class="form-group">
+                <input class="form-control" type="text" name="resume[education][<%= i %>][percentage]"
+                  value="<%= resume.education[i].percentage %>" placeholder="Percentage" />
+              </div>
+
+            </div>
+            <% } %>
+        </div>
+        <button id="education" type="button" class="btn btn-info addProject" onclick="addFields([{ name: 'education', fieldName: 'instituteName', placeholder: 'instituteName' },
+        { name: 'education', fieldName: 'degreeName', placeholder: 'degreeName' },
+        { name: 'education', fieldName: 'passingYear', placeholder: 'passingYear' },
+        { name: 'education', fieldName: 'percentage', placeholder: 'percentage' },
+        ],'educationContainer')"> + Add Education</button>
+        <h2>Skills</h2>
+
+        <h3>Languages</h3>
+        <div id="languagesContainer">
+          <% for(let i=0; i < resume.skills.length; i++) { %>
+            <div>
+              <div class="form-group">
+                <input class="form-control" type="text" name="resume[skills][<%= i %>][skillName]"
+                  value="<%= resume.skills[i].skillName %>" placeholder="Skill" />
+              </div>
+              <div class="form-group">
+                <input class="form-control" type="text" name="resume[skills][<%= i %>][description]"
+                  value="<%= resume.skills[i].description %>" placeholder="Languages used / Description" />
+              </div>
+
+            </div>
+            <% } %>
+        </div>
+        <button type="button" class="btn btn-info addProject"
+        onclick="addFields([{ name: 'skills', fieldName: 'skillName', placeholder: 'Skill Name' },
+              { name: 'skills', fieldName: 'description', placeholder: 'Languages used / Description' },       ],'languagesContainer')">+ Add Skill</button>
+        <h3>Projects</h3>
+
+        <div id="personalProjectsContainer">
+          <% for(let i=0; i < resume.personalProjects.length; i++) { %>
+            <div>
+              <div class="form-group">
+                <input class="form-control" type="text" name="resume[personalProjects][<%= i %>][name]"
+                  value="<%= resume.personalProjects[i].name %>" placeholder="Project Title" />
+              </div>
+              <div class="form-group">
+                <input class="form-control" type="text" name="resume[personalProjects][<%= i %>][description]"
+                  value="<%= resume.personalProjects[i].description %>" placeholder="Project Description" />
+              </div>
+              <div class="form-group">
+                <input class="form-control" type="text" name="resume[personalProjects][<%= i %>][link]"
+                  value="<%= resume.personalProjects[i].link %>" placeholder="Project Link" />
+              </div>
+
+            </div>
+            <% } %>
+        </div>
+        <button type="button" class="btn btn-info addProject" onclick="addFields([{ name: 'personalProjects', fieldName: 'name', placeholder: 'Project Name' },
+        { name: 'personalProjects', fieldName: 'description', placeholder: 'Project Description' },
+
+{ name: 'personalProjects', fieldName: 'link', placeholder: 'Project Link' },
+],'personalProjectsContainer')">+ Add Project</button>
+        <h2>Achievements and Hobbies</h2>
+        <h3>Achievements</h3>
+        <div id="achievementsContainer">
+          <% for(let i=0; i < resume.achievements.length; i++) { %>
+            <div>
+              </h3>
+              <div class="form-group">
+                <input class="form-control" type="text" name="resume[achievements][<%= i %>]"
+                  value="<%= resume.achievements[i] %>" placeholder="Achievements" />
+              </div>
+            </div>
+            <% } %>
+        </div>
+        <button type="button" class="btn btn-info addProject" onclick="addFields([{ name: 'achievements', fieldName: 'NoFieldName', placeholder: 'Achievements' },
+        ],'achievementsContainer')"> + Add Achievements</button>
+        <h3>Hobbies</h3>
+        <div id="hobbiesContainer">
+          <% for(let i=0; i < resume.hobbies.length; i++) { %>
+            <div>
+              </h3>
+              <div class="form-group">
+                <input class="form-control" type="text" name="resume[hobbies][<%= i %>]"
+                  value="<%= resume.hobbies[i] %>" placeholder="Hobbies" />
+              </div>
+            </div>
+            <% } %>
+        </div>
+        <button type="button" class="btn btn-info addProject" onclick="addFields([{ name: 'hobbies', fieldName: 'NoFieldName', placeholder: 'Hobbies' },
+        ],'hobbiesContainer')"> + Add Hobbies</button>
+        <h3>Account Links</h3>
+
+        <div id="accountLinksContainer">
+          <% for(let i=0; i < resume.accountLinks.length; i++) { %>
+            <div>
+              </h3>
+              <div class="form-group">
+                <input class="form-control" type="text" name="resume[accountLinks][<%= i %>][linkTitle]"
+                  value="<%= resume.accountLinks[i].linkTitle %>" placeholder="Link Title" />
+              </div>
+              <div class="form-group">
+                <input class="form-control" type="text" name="resume[accountLinks][<%= i %>][link]"
+                  value="<%= resume.accountLinks[i].link %>" placeholder="Link" />
+              </div>
+            </div>
+            <% } %>
+        </div>
+        <button type="button" class="btn btn-info addProject" onclick="addFields([{ name: 'accountLinks', fieldName: 'linkTitle', placeholder: 'Link Title' },
+        { name: 'accountLinks', fieldName: 'link', placeholder: 'Link' },
+       ],'accountLinksContainer')">+ Add Links</button>
+        <h2>Projects</h2>
+
+        <div id="projectsContainer">
+          <% for(let i=0; i < resume.work_projects.length; i++) { %>
+            <div class="project">
+              <h3>Project <%= i + 1 %>
+              </h3>
+              <div class="form-group">
+                <input class="form-control" type="text" name="resume[work_projects][<%= i %>][projectName]"
+                  value="<%= resume.work_projects[i].projectName %>" placeholder="Project Title" />
+              </div>
+              <div class="form-group">
+                <input class="form-control" type="text" name="resume[work_projects][<%= i %>][description]"
+                  value="<%= resume.work_projects[i].description %>" placeholder="Project Description" />
+              </div>
+              <div class="form-group">
+                <input class="form-control" type="text" name="resume[work_projects][<%= i %>][link]"
+                  value="<%= resume.work_projects[i].link %>" placeholder="Project Link" />
+              </div>
+              <div class="form-group">
+                <input class="form-control" type="text" name="resume[work_projects][<%= i %>][duration]"
+                  value="<%= resume.work_projects[i].duration %>" placeholder="Project Duration" />
+              </div>
+            </div>
+            <% } %>
+        </div>
+
+        <!-- Add Project button -->
+        <button type="button" class="btn btn-info addProject" onclick="addFields([{ name: 'work_projects', fieldName: 'projectName', placeholder: 'Project Name' },
+        { name: 'work_projects', fieldName: 'link', placeholder: 'Link' },
+        { name: 'work_projects', fieldName: 'description', placeholder: 'Description' },
+        { name: 'work_projects', fieldName: 'duration', placeholder: 'Duration' }],'projectsContainer');this.blur();">+
+          Add
+          Project</button>
+        <div class="form-group">
+          <button class="btn btn-success btn-lg btn-block">
+            Update Resume
+          </button>
+        </div>
+      </form>
+      <br/>
+      <a class="btn btn-md btn-primary" href="/resume/<%=redirect%>/<%=resume._id%>"><i class="fa fa-arrow-left"></i> &nbsp
+        Back</a>
+      <br />
+      <br />
+    </div>
+  </div>
+  <%- include("../partials/footer") %>
+</body>
+
+</html>
+<script>function addFields(fieldInfo, id) {
+    const container = document.getElementById(id);
+    const count = container.children.length;
+    const newDiv = document.createElement('div');
+    console.log(fieldInfo);
+    fieldInfo.forEach(field => {
+      const inputField = document.createElement('input');
+      inputField.type = 'text';
+      inputField.name = field.fieldName !== 'NoFieldName' ? `resume[${field.name}][${count}][${field.fieldName}]` : `resume[${field.name}][${count}]`;
+      inputField.placeholder = field.placeholder;
+      inputField.classList = 'form-control work-projects-add';
+      newDiv.appendChild(inputField);
+    });
+
+    container.appendChild(newDiv);
+    e.target.blur();
+  }
+</script>
+<!-- <script>
+  document.getElementById('addProjectBtn').addEventListener('click', function () {
+    const projectsContainer = document.getElementById('projectsContainer');
+    const projectCount = projectsContainer.getElementsByClassName('project').length;
+    console.log(projectCount, projectsContainer);
+    const newProject = document.createElement('div');
+    newProject.classList.add('project');
+    console.log(newProject)
+    newProject.innerHTML = `
+      <h3>Project ${projectCount + 1}</h3>
+      <div class="form-group">
+        <input
+          class="form-control"
+          type="text"
+          name="resume[work_projects][${projectCount}][projectName]"
+          placeholder="Project Title"
+        />
+      </div>
+      <div class="form-group">
+        <input
+          class="form-control"
+          type="text"
+          name="resume[work_projects][${projectCount}][description]"
+          placeholder="Project Description"
+        />
+      </div>
+      <div class="form-group">
+        <input
+          class="form-control"
+          type="text"
+          name="resume[work_projects][${projectCount}][link]"
+          placeholder="Project Link"
+        />
+      </div>
+    `;
+
+    projectsContainer.appendChild(newProject);
+  });
+</script> -->
